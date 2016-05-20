@@ -10,6 +10,8 @@ if __name__ == '__main__':
                         default='../datasets/train_set.csv')
     parser.add_argument('-o', '--output', help='Output directory',
                         default='generated_wordclouds/')
+    parser.add_argument('-s', '--stopwords', help='Stopwords file',
+                        default='stop.txt')
     parser.add_argument('-d', '--display', help='Display created wordclouds',
                         action='store_true', default=False)
     args = parser.parse_args()
@@ -25,20 +27,21 @@ if __name__ == '__main__':
         if not os.path.exists(dir_out):
             os.mkdir(dir_out, 0755)
 
-        print "Input file:", args.input
-        print "Output directory:", dir_out
+        print 'Input file:', args.input
+        print 'Output directory:', dir_out
+        print 'Stopwords:', args.stopwords
         
+        # words to ignore
+        stopwords = STOPWORDS.copy()
+        with open(args.stopwords) as stopw_f:
+            for word in stopw_f:
+                stopwords.add(word.rstrip())
+
     except IOError as e:
         print 'Error:', str(e)
         exit(1)
 
     categories = dict()
-
-    # words to ignore
-    stopwords = STOPWORDS.copy()
-    stopwords.add('said')
-    stopwords.add('will')
-    stopwords.add('new')
 
     # gather all the content in one string for each category
     for index, row in df.iterrows():
