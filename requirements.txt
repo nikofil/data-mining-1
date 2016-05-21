@@ -1,8 +1,12 @@
+Pillow==3.2.0
+argparse==1.2.1
 numpy==1.11.0
 pandas==0.18.1
-Pillow==2.8.2
 python-dateutil==2.5.3
 pytz==2016.4
 scikit-learn==0.17.1
+scipy==0.17.1
 six==1.10.0
+sklearn==0.0
 wordcloud==1.2.1
+wsgiref==0.1.2

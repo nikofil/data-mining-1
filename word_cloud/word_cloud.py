@@ -11,7 +11,7 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--output', help='Output directory',
                         default='generated_wordclouds/')
     parser.add_argument('-s', '--stopwords', help='Stopwords file',
-                        default='stop.txt')
+                        default='../stop.txt')
     parser.add_argument('-d', '--display', help='Display created wordclouds',
                         action='store_true', default=False)
     args = parser.parse_args()
