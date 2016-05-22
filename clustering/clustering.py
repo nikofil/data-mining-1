@@ -90,9 +90,8 @@ if __name__ == '__main__':
             stopwords = [l.strip() for l in fstop.readlines()]
 
         vectorizer = CountVectorizer(stop_words=stopwords)
-        print vectorizer.get_stop_words()
         transformer = TfidfTransformer()
-        svd = TruncatedSVD(n_components=10)
+        svd = TruncatedSVD(n_components=20)
 
         # vectorize, transform and perform SVD
         pipeline = Pipeline([
