@@ -86,7 +86,7 @@ if __name__ == '__main__':
 
         vectorizer = CountVectorizer(stop_words=stopwords)
         transformer = TfidfTransformer()
-        svd = TruncatedSVD(n_components=20)
+        svd = TruncatedSVD(n_components=100)
 
         # vectorize, transform and perform SVD
         pipeline = Pipeline([

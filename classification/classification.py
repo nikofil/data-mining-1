@@ -5,11 +5,10 @@ import pandas
 from sklearn.cross_validation import cross_val_score
 from sklearn.decomposition import TruncatedSVD
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.naive_bayes import  BernoulliNB, MultinomialNB
+from sklearn.naive_bayes import BernoulliNB, MultinomialNB
 from sklearn.svm import LinearSVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelEncoder
 
 if __name__ == '__main__':
@@ -44,7 +43,7 @@ if __name__ == '__main__':
             stopwords = [l.strip() for l in fstop.readlines()]
 
         vectorizer = TfidfVectorizer(stop_words=stopwords, sublinear_tf=True, use_idf=True)
-        svd = TruncatedSVD(n_components=20)
+        svd = TruncatedSVD(n_components=100)
 
         print('')
         print('Transforming input')
