@@ -70,8 +70,8 @@ if __name__ == '__main__':
                         default='../datasets/train_set.csv')
     parser.add_argument('-o', '--output', help='Output CSV file',
                         default='clustering_KMeans.csv')
-    # parser.add_argument('-s', '--stopwords', help='Stopwords file',
-    #                     default='../stop.txt')
+    parser.add_argument('-s', '--stopwords', help='Stopwords file',
+                        default='../stop.txt')
     args = parser.parse_args()
 
     try:
@@ -83,9 +83,14 @@ if __name__ == '__main__':
 
         print 'Input file:', args.input
         print 'Output file:', args.output
-        # print 'Stopwords:', args.stopwords
+        print 'Stopwords:', args.stopwords
 
-        vectorizer = CountVectorizer(stop_words='english')
+        # read the stopwords from the file
+        with open(args.stopwords) as fstop:
+            stopwords = [l.strip() for l in fstop.readlines()]
+
+        vectorizer = CountVectorizer(stop_words=stopwords)
+        print vectorizer.get_stop_words()
         transformer = TfidfTransformer()
         svd = TruncatedSVD(n_components=10)
 
@@ -108,7 +113,8 @@ if __name__ == '__main__':
 
         # group points by their assigned cluster
         print('Gathering results')
-        for _, group in itertools.groupby(
+        print('')
+        for idx, group in itertools.groupby(
                 sorted(enumerate(res), key=operator.itemgetter(1)),
                 operator.itemgetter(1)):
             # group_points is an array points in the current cluster
@@ -120,18 +126,21 @@ if __name__ == '__main__':
             # count how many points there are for each category
             cat_counts = [(name, real_categories.count(name))
                           for name in cat_names]
-            print cat_counts
 
             # calculate the percentages of points in this cluster
             # belonging to each category
             cat_pcts = [(name, str(float(cnt) / len(real_categories))[:5])
                         for name, cnt in cat_counts]
 
+            print('Cluster {}: ({})'.format(idx + 1, ', '.join(
+                [name + ': ' + perc for (name, perc) in cat_pcts])))
+
             # append results to output data
             for cat_name, pct in cat_pcts:
                 out_data[cat_name].append(pct)
 
         # write output to csv
+        print('')
         print('Writing output')
         df = pandas.DataFrame(out_data, index=['Cluster'+str(i+1) for i in xrange(5)])
         df.to_csv(args.output, sep='\t')
