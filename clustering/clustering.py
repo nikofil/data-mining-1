@@ -20,12 +20,7 @@ if __name__ == '__main__':
         denom = sqrt(s1 * s2)
         return dot / denom if denom != 0 else 1
 
-
-    # distance is the arccos of cosine similarity
-    cos_dist = lambda v1, v2: acos(cos_sim(v1, v2))
-
-
-    def k_means(points, n=5, threshold=0.005, comp=cos_dist):
+    def k_means(points, n=5, threshold=0.005, comp=cos_sim):
         # find the dimension of the points
         dim = len(points[0])
         # start with random means
@@ -38,8 +33,8 @@ if __name__ == '__main__':
             for i, p in enumerate(points):
                 # find the distance of current point to each cluster
                 dists = [comp(p, mean) for mean in means]
-                # assign point to closest cluster
-                clust[i] = min(enumerate(dists), key=operator.itemgetter(1))[0]
+                # assign point to closest cluster (largest cos)
+                clust[i] = max(enumerate(dists), key=operator.itemgetter(1))[0]
 
             # add all the points' positions for each cluster
             mean_sums = [[0] * dim for i in xrange(n)]
