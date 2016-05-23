@@ -1,4 +1,4 @@
-Pillow==3.2.0
+Pillow==2.8.2
 argparse==1.2.1
 numpy==1.11.0
 pandas==0.18.1

@@ -51,7 +51,7 @@ if __name__ == '__main__':
         categories[cat] += row['Content'] + ' '
 
     for (cat, texts) in categories.iteritems():
-        path_out = dir_out + cat + '.jpg'
+        path_out = dir_out + cat + '.png'
         print 'Generating wordcloud for category', cat, 'at', path_out
         wc = WordCloud(stopwords=stopwords).generate(texts)
         if args.display:
