@@ -1,5 +1,7 @@
 #!/usr/bin/python
 import argparse
+import collections
+
 import os
 import pandas
 import operator
@@ -73,7 +75,8 @@ if __name__ == '__main__':
         testpoints = union.transform(testtexts)
         testpoints_lsa = svd.transform(testpoints)
 
-        evaluationresult = {'Statistic Measure': ['Accuracy', 'ROC']}
+        evaluationresult = collections.OrderedDict({'Statistic Measure':
+                                                        ['Accuracy', 'ROC']})
 
         for clf, name, use_lsa in [
             (BernoulliNB(alpha=0.001), 'BinomialNB', False),
